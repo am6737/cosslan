@@ -2,10 +2,10 @@ package service
 
 import (
 	"context"
-	"cosslan/config"
-	"cosslan/internal/app/dto"
-	"cosslan/internal/infra/persistence"
 	"fmt"
+	"github.com/cossteam/cosslan/config"
+	"github.com/cossteam/cosslan/internal/app/dto"
+	"github.com/cossteam/cosslan/internal/infra/persistence"
 )
 
 var _ NodeService = &NodeServiceImpl{}

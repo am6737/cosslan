@@ -2,9 +2,9 @@ package line
 
 import (
 	"context"
-	"cosslan/config"
-	"cosslan/internal/app/dto"
 	"fmt"
+	"github.com/cossteam/cosslan/config"
+	"github.com/cossteam/cosslan/internal/app/dto"
 	"go.uber.org/zap"
 )
 

@@ -1,4 +1,4 @@
-module cosslan
+module github.com/cossteam/cosslan
 
 go 1.22.0
 

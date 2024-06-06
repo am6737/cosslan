@@ -1,7 +1,7 @@
 package filter
 
 import (
-	"cosslan/internal/domain/entity"
+	"github.com/cossteam/cosslan/internal/domain/entity"
 	"go.mongodb.org/mongo-driver/bson"
 )
 

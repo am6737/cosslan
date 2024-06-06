@@ -2,8 +2,8 @@ package repository
 
 import (
 	"context"
-	"cosslan/internal/domain/entity"
-	"cosslan/internal/domain/filter"
+	"github.com/cossteam/cosslan/internal/domain/entity"
+	"github.com/cossteam/cosslan/internal/domain/filter"
 )
 
 type NodeRepository interface {

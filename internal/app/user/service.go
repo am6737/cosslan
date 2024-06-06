@@ -1,8 +1,8 @@
 package user
 
 import (
-	"cosslan/config"
-	"cosslan/internal/domain/service"
+	"github.com/cossteam/cosslan/config"
+	"github.com/cossteam/cosslan/internal/domain/service"
 )
 
 type Service struct {

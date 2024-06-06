@@ -2,9 +2,9 @@ package persistence
 
 import (
 	"context"
-	"cosslan/config"
-	"cosslan/internal/domain/repository"
 	"fmt"
+	"github.com/cossteam/cosslan/config"
+	"github.com/cossteam/cosslan/internal/domain/repository"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"sync"

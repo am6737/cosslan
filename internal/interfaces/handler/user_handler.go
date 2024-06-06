@@ -1,10 +1,10 @@
 package handler
 
 import (
-	userv1 "cosslan/internal/api/http/v1/user"
-	"cosslan/internal/app/dto"
-	"cosslan/internal/app/user"
-	pkghttp "cosslan/pkg/http"
+	userv1 "github.com/cossteam/cosslan/internal/api/http/v1/user"
+	"github.com/cossteam/cosslan/internal/app/dto"
+	"github.com/cossteam/cosslan/internal/app/user"
+	pkghttp "github.com/cossteam/cosslan/pkg/http"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )

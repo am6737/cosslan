@@ -2,9 +2,9 @@ package node
 
 import (
 	"context"
-	"cosslan/config"
-	"cosslan/internal/app/dto"
 	"fmt"
+	"github.com/cossteam/cosslan/config"
+	"github.com/cossteam/cosslan/internal/app/dto"
 )
 
 // UseCase defines the interface for Line use cases.

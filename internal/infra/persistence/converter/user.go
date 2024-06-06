@@ -1,9 +1,9 @@
 package converter
 
 import (
-	"cosslan/internal/domain/entity"
-	"cosslan/internal/infra/persistence/po"
 	"fmt"
+	"github.com/cossteam/cosslan/internal/domain/entity"
+	"github.com/cossteam/cosslan/internal/infra/persistence/po"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

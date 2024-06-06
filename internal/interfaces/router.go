@@ -1,10 +1,10 @@
 package interfaces
 
 import (
-	linev1 "cosslan/internal/api/http/v1/line"
-	nodev1 "cosslan/internal/api/http/v1/node"
-	userv1 "cosslan/internal/api/http/v1/user"
-	"cosslan/internal/interfaces/handler"
+	linev1 "github.com/cossteam/cosslan/internal/api/http/v1/line"
+	nodev1 "github.com/cossteam/cosslan/internal/api/http/v1/node"
+	userv1 "github.com/cossteam/cosslan/internal/api/http/v1/user"
+	"github.com/cossteam/cosslan/internal/interfaces/handler"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"go.uber.org/zap"
