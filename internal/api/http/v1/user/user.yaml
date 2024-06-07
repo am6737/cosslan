@@ -5,6 +5,8 @@ info:
 paths:
   /api/v1/user/login:
     post:
+      security:
+        - BearerAuth: [ ]
       summary: 用户登录
       operationId: login
       tags:

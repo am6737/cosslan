@@ -5,6 +5,16 @@ server:
 
 persistence:
   enabled: true
-  url: "mongodb://localhost:27017"
+  url: "mongodb://root:Hitosea%40123..@localhost:27017"
   type: "mongodb"
   db: "cosslan"
+
+redis:
+  proto: "tcp"
+  address: "redis"
+  port: 6379
+  password: "Hitosea@123.."
+
+jwt:
+  secret_key: "Hitosea@123.."
+  expire: "72h"

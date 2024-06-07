@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/cossteam/cosslan/config"
 	"github.com/cossteam/cosslan/internal/app/dto"
-	"go.uber.org/zap"
 )
 
 // UseCase defines the interface for Line use cases.
@@ -16,7 +15,6 @@ type UseCase interface {
 // LineUseCase implements the UseCase interface for Line.
 type LineUseCase struct {
 	service *Service
-	logger  *zap.Logger
 }
 
 // NewLineUseCase creates a new LineUseCase.

@@ -31,3 +31,7 @@ func Success(ctx echo.Context, msg string, data interface{}) error {
 func Fail(ctx echo.Context, code int, msg string) error {
 	return SendResponse(ctx, code, msg, nil)
 }
+
+func InternalServerError(ctx echo.Context, err error) error {
+	return SendResponse(ctx, http.StatusInternalServerError, err.Error(), nil)
+}

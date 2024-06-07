@@ -1,15 +1,12 @@
 package handler
 
 import (
-	nodev1 "github.com/cossteam/cosslan/internal/api/http/v1/node"
 	"github.com/cossteam/cosslan/internal/app/dto"
 	"github.com/cossteam/cosslan/internal/app/node"
 	pkghttp "github.com/cossteam/cosslan/pkg/http"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
-
-var _ nodev1.ServerInterface = &NodeHandler{}
 
 type NodeHandler struct {
 	useCase node.UseCase

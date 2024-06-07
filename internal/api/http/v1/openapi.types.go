@@ -7,6 +7,10 @@ import (
 	openapi_types "github.com/oapi-codegen/runtime/types"
 )
 
+const (
+	BearerAuthScopes = "BearerAuth.Scopes"
+)
+
 // Response defines model for Response.
 type Response struct {
 	Code int                     `json:"code"`

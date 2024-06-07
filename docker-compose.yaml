@@ -1,0 +1,21 @@
+version: 3.0.0
+
+services:
+  redis:
+    image: redis:latest
+    container_name: cosslan_redis
+    ports:
+      - 6379:6379
+    command: redis-server --requirepass Hitosea@123..
+  mongodb:
+    image: mongo:latest
+    container_name: cosslan_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Hitosea@123..
+    volumes:
+      - .cache/mongo/data:/data/db
+      - .cache/mongo/config:/data/configdb

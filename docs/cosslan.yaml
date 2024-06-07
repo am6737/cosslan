@@ -80,6 +80,8 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/Response'
                     description: 登录成功
+            security:
+                - BearerAuth: []
             summary: 用户登录
             tags:
                 - user

@@ -5,9 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"github.com/cossteam/cosslan/config"
-	"github.com/cossteam/cosslan/internal/app/line"
-	"github.com/cossteam/cosslan/internal/app/node"
-	"github.com/cossteam/cosslan/internal/app/user"
+	"github.com/cossteam/cosslan/internal/app"
 	router "github.com/cossteam/cosslan/internal/interfaces"
 	"github.com/cossteam/cosslan/internal/interfaces/handler"
 	"github.com/cossteam/cosslan/pkg/log"
@@ -19,23 +17,38 @@ import (
 	"time"
 )
 
-var path = ""
+var configPath string
 
 func init() {
-	flag.StringVar(&path, "config", "config/config.yaml", "配置文件")
+	flag.StringVar(&configPath, "config", "config/config.yaml", "配置文件")
 	flag.Parse()
 }
 
 func main() {
+	//加载日志与配置文件
+	cfg, logger := setup()
 
-	// 读取配置文件
-	cfg, err := config.LoadConfig(path)
+	//加载app
+	ap := app.NewApp(cfg)
+
+	//初始化路由
+	handlers := initializeHandlers(ap)
+	r, err := router.NewRouter(handlers, logger, ap.AuthCase)
+	if err != nil {
+		logger.Fatal("Failed to initialize router", zap.Error(err))
+	}
+
+	//启动服务
+	startServer(r, logger)
+}
+
+func setup() (config.Config, *zap.Logger) {
+	cfg, err := config.LoadConfig(configPath)
 	if err != nil {
 		fmt.Printf("无法读取配置文件: %v\n", err)
 		os.Exit(1)
 	}
 
-	// 初始化日志
 	logger, err := log.SetupLogger(cfg.Server.LogLevel)
 	if err != nil {
 		fmt.Printf("无法设置日志: %v\n", err)
@@ -44,39 +57,34 @@ func main() {
 	defer logger.Sync()
 	zap.ReplaceGlobals(logger)
 
-	lineCase := line.NewLineUseCase(cfg)
-	userCase := user.NewUserUseCase(cfg)
-	nodeCase := node.NewNodeUseCase(cfg)
+	return cfg, logger
+}
 
-	// Initialize handlers
-	lineHandler := handler.NewLineHandler(lineCase)
-	nodeHandler := handler.NewNodeHandler(nodeCase)
-	userHandler := handler.NewUserHandler(userCase)
+func initializeHandlers(ap *app.App) *handler.Handler {
+	lineHandler := handler.NewLineHandler(ap.LineCase)
+	nodeHandler := handler.NewNodeHandler(ap.NodeCase)
+	userHandler := handler.NewUserHandler(ap.UserCase)
 
-	// Initialize the router
-	e := router.NewRouter(lineHandler, nodeHandler, userHandler, logger)
+	return handler.NewHandler(userHandler, nodeHandler, lineHandler)
+}
 
-	// Run the server in a goroutine so that it doesn't block
+func startServer(r *router.Router, logger *zap.Logger) {
 	go func() {
-		if err := e.Start(":8080"); err != nil && err != http.ErrServerClosed {
-			e.Logger.Fatal("shutting down the server")
+		if err := r.E.Start(":8080"); err != nil && err != http.ErrServerClosed {
+			logger.Fatal("Failed to start server", zap.Error(err))
 		}
 	}()
 
-	// Create a channel to listen for OS signals
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
-	// Block until we receive a signal
 	<-quit
 	fmt.Println("Shutting down the server...")
 
-	// Create a context with a timeout for the shutdown
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	// Attempt to gracefully shutdown the server
-	if err := e.Shutdown(ctx); err != nil {
-		e.Logger.Fatal(err)
+	if err := r.E.Shutdown(ctx); err != nil {
+		r.E.Logger.Fatal(err)
 	}
 }

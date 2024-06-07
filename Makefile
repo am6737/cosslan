@@ -5,12 +5,17 @@ MODEL_LIST = user line node
 run:
 	@go run ./cmd/main.go
 
-.PHONY: gen-openapi
-gen-openapi: $(addprefix gen-openapi-, $(MODEL_LIST))
+#.PHONY: gen-openapi
+#gen-openapi: $(addprefix gen-openapi-, $(MODEL_LIST))
+#
+#gen-openapi-%:
+#	-@oapi-codegen -generate echo,spec -o internal/api/http/v1/$*/openapi.gen.go -package v1 internal/api/http/v1/$*/$*.yaml
+#	-@oapi-codegen -generate types -o internal/api/http/v1/$*/openapi.types.go -package v1 internal/api/http/v1/$*/$*.yaml
 
-gen-openapi-%:
-	-@oapi-codegen -generate echo,spec -o internal/api/http/v1/$*/openapi.gen.go -package v1 internal/api/http/v1/$*/$*.yaml
-	-@oapi-codegen -generate types -o internal/api/http/v1/$*/openapi.types.go -package v1 internal/api/http/v1/$*/$*.yaml
+.PHONY: gen-openapi
+gen-openapi:
+	-@oapi-codegen -generate echo,spec -o internal/api/http/v1/openapi.gen.go -package v1 docs/cosslan.yaml
+	-@oapi-codegen -generate types -o internal/api/http/v1/openapi.types.go -package v1 docs/cosslan.yaml
 
 
 # 定义变量

@@ -21,7 +21,7 @@ type Repositories struct {
 	NodeRepo repository.NodeRepository
 }
 
-func NewRepositories(db *mongo.Client, dbName string) *Repositories {
+func newRepositories(db *mongo.Client, dbName string) *Repositories {
 	return &Repositories{UserRepo: NewUserRepository(db, dbName), LineRepo: NewLineRepository(db, dbName), NodeRepo: NewNodeRepository(db, dbName)}
 }
 
@@ -32,7 +32,7 @@ func GetRepositories(cfg config.Config) *Repositories {
 		if err != nil {
 			panic(err)
 		}
-		repos = NewRepositories(mongoDB, cfg.Persistence.DB)
+		repos = newRepositories(mongoDB, cfg.Persistence.DB)
 	})
 	return repos
 }
