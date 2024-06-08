@@ -2,16 +2,16 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"github.com/cossteam/cosslan/config"
-	"github.com/cossteam/cosslan/internal/app/dto"
+	"github.com/cossteam/cosslan/internal/domain/entity"
 	"github.com/cossteam/cosslan/internal/infra/persistence"
 )
 
 var _ UserService = &UserServiceImpl{}
 
 type UserService interface {
-	CreateUser(ctx context.Context, dto dto.CreateUserDTO) error
+	GetUser(ctx context.Context, id string) (*entity.User, error)
+	CreateUser(ctx context.Context, user *entity.User) error
 }
 
 type UserServiceImpl struct {
@@ -22,7 +22,10 @@ func NewUserServiceImpl(cfg config.Config) UserService {
 	return &UserServiceImpl{repo: persistence.GetRepositories(cfg)}
 }
 
-func (u *UserServiceImpl) CreateUser(ctx context.Context, dto dto.CreateUserDTO) error {
-	fmt.Println("创建用户")
-	return nil
+func (u *UserServiceImpl) GetUser(ctx context.Context, id string) (*entity.User, error) {
+	return u.repo.UserRepo.Get(ctx, id)
+}
+
+func (u *UserServiceImpl) CreateUser(ctx context.Context, user *entity.User) error {
+	return u.repo.UserRepo.Create(ctx, user)
 }
