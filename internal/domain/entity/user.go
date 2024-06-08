@@ -1,9 +1,7 @@
 package entity
 
-import "go.mongodb.org/mongo-driver/bson/primitive"
-
 type User struct {
-	UserID    primitive.ObjectID
+	UserID    string
 	Name      string
 	Password  string
 	Email     string

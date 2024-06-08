@@ -16,14 +16,21 @@ var (
 )
 
 type Repositories struct {
-	UserRepo repository.UserRepository
-	LineRepo repository.LineRepository
-	NodeRepo repository.NodeRepository
-	Db       *mongo.Client
+	UserRepo    repository.UserRepository
+	LineRepo    repository.LineRepository
+	NodeRepo    repository.NodeRepository
+	NetworkRepo repository.NetworkRepository
+	Db          *mongo.Client
 }
 
 func newRepositories(db *mongo.Client, dbName string) *Repositories {
-	return &Repositories{UserRepo: NewUserRepository(db, dbName), LineRepo: NewLineRepository(db, dbName), NodeRepo: NewNodeRepository(db, dbName), Db: db}
+	return &Repositories{
+		Db:          db,
+		UserRepo:    NewUserRepository(db, dbName),
+		LineRepo:    NewLineRepository(db, dbName),
+		NodeRepo:    NewNodeRepository(db, dbName),
+		NetworkRepo: NewNetworkRepository(db, dbName),
+	}
 }
 
 func GetRepositories(cfg config.Config) *Repositories {

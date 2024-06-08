@@ -4,19 +4,20 @@ import "go.mongodb.org/mongo-driver/bson"
 
 // LineFilter 是用于查询线路的过滤条件
 type LineFilter struct {
-	ID         string
+	LineID     string
 	Name       string
 	Type       string
 	UserID     string
 	NextNodeID string
+	NetworkID  string
 }
 
 // ToBSON 将 LineFilter 转换为 MongoDB 查询文档
 func (filter *LineFilter) ToBSON() bson.M {
 	query := bson.M{}
 
-	if filter.ID != "" {
-		query["_id"] = filter.ID
+	if filter.LineID != "" {
+		query["_id"] = filter.LineID
 	}
 
 	if filter.Name != "" {
@@ -33,6 +34,10 @@ func (filter *LineFilter) ToBSON() bson.M {
 
 	if filter.NextNodeID != "" {
 		query["next_node_id"] = filter.NextNodeID
+	}
+
+	if filter.NetworkID != "" {
+		query["network_id"] = filter.NetworkID
 	}
 
 	return query

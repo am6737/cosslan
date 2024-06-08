@@ -7,24 +7,29 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func ToPONode(n *entity.Node) *po.Node {
-	return &po.Node{
-		ID:        n.ID.String(),
+func ToEntityNode(n *po.Node) *entity.Node {
+	return &entity.Node{
+		NodeID:    n.NodeID.String(),
 		Name:      n.Name,
 		IP:        n.IP,
 		UserID:    n.UserID.String(),
-		Location:  n.Location,
+		NetworkID: n.NetworkID.String(),
+		Status:    entity.NodeStatus(n.Status),
 		CreatedAt: n.CreatedAt,
 		UpdatedAt: n.UpdatedAt,
 		DeletedAt: n.DeletedAt,
 	}
 }
 
-func ToEntityNode(p *po.Node) *entity.Node {
-	id, err := primitive.ObjectIDFromHex(p.ID)
+func ToPONode(p *entity.Node) *po.Node {
+	id, err := primitive.ObjectIDFromHex(p.NodeID)
 	if err != nil {
 		fmt.Println("error：", err)
 		return nil
+	}
+
+	if id == primitive.NilObjectID {
+		id = primitive.NewObjectID()
 	}
 
 	userID, err := primitive.ObjectIDFromHex(p.UserID)
@@ -33,12 +38,21 @@ func ToEntityNode(p *po.Node) *entity.Node {
 		return nil
 	}
 
-	return &entity.Node{
-		ID:        id,
+	networkID, err := primitive.ObjectIDFromHex(p.NetworkID)
+	if err != nil {
+		fmt.Println("error：", err)
+		return nil
+	}
+
+	return &po.Node{
+		NodeID:    id,
 		Name:      p.Name,
 		IP:        p.IP,
+		PublicIP:  p.PublicIP,
+		Port:      p.Port,
 		UserID:    userID,
-		Location:  p.Location,
+		Status:    uint8(p.Status),
+		NetworkID: networkID,
 		CreatedAt: p.CreatedAt,
 		UpdatedAt: p.UpdatedAt,
 		DeletedAt: p.DeletedAt,
