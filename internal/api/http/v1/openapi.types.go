@@ -11,6 +11,15 @@ const (
 	BearerAuthScopes = "BearerAuth.Scopes"
 )
 
+// CreateNetwork defines model for CreateNetwork.
+type CreateNetwork struct {
+	// Address 网络地址
+	Address *string `json:"address,omitempty"`
+
+	// SubnetMask 子网掩码
+	SubnetMask *string `json:"subnet_mask,omitempty"`
+}
+
 // Response defines model for Response.
 type Response struct {
 	Code int                     `json:"code"`
@@ -23,6 +32,9 @@ type UserLoginRequest struct {
 	Email    openapi_types.Email `json:"email"`
 	Password string              `json:"password"`
 }
+
+// CreateNetworkJSONRequestBody defines body for CreateNetwork for application/json ContentType.
+type CreateNetworkJSONRequestBody = CreateNetwork
 
 // LoginJSONRequestBody defines body for Login for application/json ContentType.
 type LoginJSONRequestBody = UserLoginRequest

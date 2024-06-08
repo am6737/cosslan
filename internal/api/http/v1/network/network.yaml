@@ -12,94 +12,16 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Response'
+              $ref: "#/components/schemas/CreateNetwork"
       tags:
         - network
       responses:
-        '200':
+        "200":
           description: Network created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Response'
-#  /api/v1/network/{id}:
-#    get:
-#      summary: Get a network by ID
-#      operationId: getNetwork
-#      parameters:
-#        - description: 网络id
-#          in: path
-#          name: id
-#          required: true
-#          schema:
-#            type: string
-#      tags:
-#        - network
-#      responses:
-#        '200':
-#          description: A successful response
-#          content:
-#            application/json:
-#              schema:
-#                $ref: '#/components/schemas/Network'
-#        '404':
-#          description: Network not found
-#    put:
-#      summary: Update an existing network
-#      operationId: updateNetwork
-#      parameters:
-#        - description: 网络id
-#          in: path
-#          name: id
-#          required: true
-#          schema:
-#            type: string
-#      requestBody:
-#        description: Network object that needs to be updated
-#        required: true
-#        content:
-#          application/json:
-#            schema:
-#              $ref: '#/components/schemas/Network'
-#      tags:
-#        - network
-#      responses:
-#        '200':
-#          description: Network updated successfully
-#          content:
-#            application/json:
-#              schema:
-#                $ref: '#/components/schemas/Network'
-    delete:
-      summary: 删除网络
-      operationId: deleteNetwork
-      parameters:
-        - description: 网络id
-          in: path
-          name: id
-          required: true
-          schema:
-            type: string
-      tags:
-        - network
-      responses:
-        '200':
-          description: Network deleted successfully
-  /api/v1/network/list:
-    get:
-      summary: 获取网络列表
-      operationId: listNetworks
-      tags:
-        - network
-      responses:
-        '200':
-          description: A successful response
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/Response'
+                $ref: "#/components/schemas/Response"
 components:
   securitySchemes:
     BearerAuth:

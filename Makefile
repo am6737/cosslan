@@ -19,7 +19,7 @@ gen-openapi:
 
 
 # 定义变量
-INPUT_DIRS := $(wildcard  ./internal/api/http/v1/*)
+INPUT_YAMLS := $(shell find ./internal/api/http/v1 -type f -name '*.yaml')
 OUTPUT_FILE := ./docs/cosslan.yaml
 SWAGGER_MERGER := $(shell command -v go-swagger-merger)
 
@@ -27,9 +27,8 @@ SWAGGER_MERGER := $(shell command -v go-swagger-merger)
 #go install github.com/efureev/go-swagger-merger
 # 定义合并 OpenAPI 的目标
 .PHONY: merge-openapi
-merge-openapi: gen-openapi
-    # 检查是否存在 go-swagger-merger 命令
-	go-swagger-merger -o $(OUTPUT_FILE) $(foreach dir,$(INPUT_DIRS),-i $(dir)/*.yaml)
+merge-openapi:
+	$(SWAGGER_MERGER) -o $(OUTPUT_FILE) $(foreach yaml,$(INPUT_YAMLS),-i $(yaml))
 
 # Go code format
 .PHONY: fmt
